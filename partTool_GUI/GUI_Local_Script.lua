@@ -11,11 +11,13 @@ local event = ReplicatedStorage:WaitForChild('UIEvent')
 local blue = ui:WaitForChild('ColourBlue')
 local red = ui:WaitForChild('ColourRed')
 
+--If the blue button is pressed:
 local function onSelectBlue()
 	print("Blue selected")
 	event:FireServer(1)
 end
 
+--If the red button is pressed:
 local function onSelectRed()
 	print("Red selected")
 	event:FireServer(2)
