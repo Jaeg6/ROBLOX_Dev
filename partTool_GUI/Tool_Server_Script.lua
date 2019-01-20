@@ -12,6 +12,14 @@ local uiEventConnection
 local blue = false
 local red = false
 
+--[[
+	function connected to the UI RemoteEvent
+	Determines whether the blue or red button was pressed
+	and sets the boolean values appropriately
+
+	player parameter represents the player who triggered the event
+	input parameter represents the colour input the player chose
+--]]
 local function colourPref(player, input)
 	print("Active", input)
 	if input == 1 then
@@ -23,6 +31,12 @@ local function colourPref(player, input)
 	end
 end
 
+--[[
+	Creates a new part and adjusts the colour appropriately
+	according the current state of the colour boolean values
+
+	location parameter represents the saved mouse location
+--]]
 local function createPart(location)
 	local part = Instance.new('Part')
 	if blue then
@@ -35,19 +49,26 @@ local function createPart(location)
 	part.Parent = workspace
 end
 
+--[[
+	function connected to click RemoteEvent
+	
+	player represents the player who triggered the event
+	location represents the saved mouse location at the time of the event being triggered
+--]]
 local function onClick(player, location)
 	print(player.Name, " just produced a click event")
 	createPart(location)
 end
 
 
-
+--At time of equip all appropriate RemoteEvents are connected, waiting for an event to be fired
 local function onEquip()
 	clickEventConnection = event.OnServerEvent:connect(onClick)
 	uiEventConnection = uiEvent.OnServerEvent:connect(colourPref)
 	
 end
 
+--When tool is put away all RemoteEvents are disconnected
 local function onUnequip()
 	clickEventConnection:Disconnect()
 	uiEventConnection:Disconnect()
